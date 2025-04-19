@@ -134,7 +134,7 @@ const Demo = () => {
             {/* Individual Image Cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {/* Input Image */}
-              <div className="bg-gray-200 border border-gray-200 rounded-lg p-4 flex flex-col items-center justify-between shadow-md">
+              <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 flex flex-col items-center justify-between shadow-md">
                 <h3 className="text-md font-medium mb-2 text-gray-700">
                   Input Image
                 </h3>
