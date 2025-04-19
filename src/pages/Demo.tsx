@@ -4,7 +4,6 @@ import "react-toastify/dist/ReactToastify.css";
 
 const Demo = () => {
   const [inputFile, setInputFile] = useState<File | null>(null);
-  const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [images, setImages] = useState<{
     input?: string;
@@ -19,20 +18,11 @@ const Demo = () => {
     const isH5 = file.name.endsWith(".h5");
     const isImage = file.type.startsWith("image/");
 
-    if (isH5) {
+    if (isH5 || isImage) {
       setInputFile(file);
-      setPreviewImage(null); // clear preview
-    } else if (isImage) {
-      setInputFile(file);
-      const reader = new FileReader();
-      reader.onload = () => {
-        setPreviewImage(reader.result as string);
-      };
-      reader.readAsDataURL(file);
     } else {
       toast.error("Please upload a valid .h5 or image file.");
       setInputFile(null);
-      setPreviewImage(null);
     }
   };
 
@@ -43,6 +33,7 @@ const Demo = () => {
     }
 
     setLoading(true);
+    setImages({});
     const formData = new FormData();
     formData.append("file", inputFile);
 
@@ -82,18 +73,27 @@ const Demo = () => {
     setLoading(false);
   };
 
+  const handleDownload = (base64Url: string | undefined, name: string) => {
+    if (!base64Url) return;
+    const a = document.createElement("a");
+    a.href = base64Url;
+    a.download = `${name}.png`;
+    a.click();
+  };
+
   return (
-    <div className="min-h-screen pt-20 pb-12 bg-gray-50">
-      <div className="max-w-3xl mx-auto px-4">
-        <h1 className="text-3xl font-bold text-center mb-8">
-          Seismic Model Upload: Denoising (.h5) or Image
+    <div className="min-h-screen pt-20 pb-12 bg-gray-50 font-sans">
+      <div className="max-w-5xl mx-auto px-4">
+        <h1 className="text-3xl font-bold text-center mb-8 text-blue-900">
+          Seismic Image Denoising & Fault Segmentation
         </h1>
 
-        <div className="bg-white rounded-xl shadow-lg p-8">
-          <div className="mb-8">
-            <label className="block w-full">
-              <div className="bg-blue-900 text-white text-center py-4 px-6 rounded-lg cursor-pointer hover:bg-blue-800 transition-colors">
-                {inputFile ? inputFile.name : "Choose a .h5 or image file"}
+        {/* Upload and Submit Section */}
+        <div className="bg-white rounded-xl shadow-md p-6 mb-10">
+          <div className="flex flex-col items-center gap-3">
+            <label className="inline-block">
+              <div className="bg-blue-700 text-white text-sm px-4 py-2 rounded-md cursor-pointer hover:bg-blue-800 transition">
+                {inputFile ? inputFile.name : "Choose File"}
               </div>
               <input
                 type="file"
@@ -102,68 +102,123 @@ const Demo = () => {
                 className="hidden"
               />
             </label>
+
+            <button
+              onClick={handleSubmit}
+              disabled={loading}
+              className={`text-sm px-4 py-2 rounded-md font-semibold text-white transition ${
+                loading
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-emerald-600 hover:bg-emerald-700"
+              }`}
+            >
+              {loading ? "Processing..." : "Submit"}
+            </button>
           </div>
-
-          <button
-            onClick={handleSubmit}
-            disabled={loading}
-            className={`w-full py-4 rounded-lg font-semibold text-white transition-colors ${
-              loading
-                ? "bg-gray-400 cursor-not-allowed"
-                : "bg-emerald-600 hover:bg-emerald-700"
-            }`}
-          >
-            {loading ? "Processing..." : "Submit"}
-          </button>
-
-          {previewImage && (
-            <div className="mt-10">
-              <h3 className="text-xl font-semibold mb-2">Uploaded Image Preview</h3>
-              <img
-                src={previewImage}
-                alt="Preview"
-                className="w-full rounded-lg shadow-md"
-              />
-            </div>
-          )}
-
-          {(images.input || images.denoised || images.segmented) && (
-            <div className="mt-10 space-y-8">
-              {images.input && (
-                <div>
-                  <h3 className="text-xl font-semibold mb-2">Input Image</h3>
-                  <img
-                    src={images.input}
-                    alt="Input"
-                    className="w-full rounded-lg shadow-md"
-                  />
-                </div>
-              )}
-
-              {images.denoised && (
-                <div>
-                  <h3 className="text-xl font-semibold mb-2">Denoised Image</h3>
-                  <img
-                    src={images.denoised}
-                    alt="Denoised"
-                    className="w-full rounded-lg shadow-md"
-                  />
-                </div>
-              )}
-
-              {images.segmented && (
-                <div>
-                  <h3 className="text-xl font-semibold mb-2">Segmented Image</h3>
-                  <img
-                    src={images.segmented}
-                    alt="Segmented"
-                    className="w-full rounded-lg shadow-md"
-                  />
-                </div>
-              )}
-            </div>
-          )}
         </div>
+
+        {/* Loading Spinner */}
+        {loading && (
+          <div className="flex justify-center my-6">
+            <div className="w-10 h-10 border-4 border-blue-500 border-dashed rounded-full animate-spin"></div>
+          </div>
+        )}
+
+        {/* Processed Image Section */}
+        {!loading && (images.input || images.denoised || images.segmented) && (
+          <div className="bg-white rounded-xl shadow-md p-6">
+            <h2 className="text-xl font-semibold text-center mb-6 text-gray-800">
+              Processed Results
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* Input Image */}
+              <div className="flex flex-col justify-between items-center">
+                <div className="text-center">
+                  <h3 className="text-md font-medium mb-2 text-gray-700">
+                    Input Image
+                  </h3>
+                  {images.input ? (
+                    <img
+                      src={images.input}
+                      alt="Input"
+                      className="rounded shadow-md max-h-48 object-contain"
+                    />
+                  ) : (
+                    <div className="h-48 w-full bg-gray-200 rounded flex items-center justify-center text-gray-400">
+                      Not Available
+                    </div>
+                  )}
+                </div>
+                <button
+                  onClick={() => handleDownload(images.input, "input_image")}
+                  disabled={!images.input}
+                  className="mt-4 text-sm text-white bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded-md disabled:opacity-50"
+                >
+                  Download
+                </button>
+              </div>
+
+              {/* Denoised Image */}
+              <div className="flex flex-col justify-between items-center">
+                <div className="text-center">
+                  <h3 className="text-md font-medium mb-2 text-gray-700">
+                    Denoised Image
+                  </h3>
+                  {images.denoised ? (
+                    <img
+                      src={images.denoised}
+                      alt="Denoised"
+                      className="rounded shadow-md max-h-48 object-contain"
+                    />
+                  ) : (
+                    <div className="h-48 w-full bg-gray-200 rounded flex items-center justify-center text-gray-400">
+                      Not Available
+                    </div>
+                  )}
+                </div>
+                <button
+                  onClick={() =>
+                    handleDownload(images.denoised, "denoised_image")
+                  }
+                  disabled={!images.denoised}
+                  className="mt-4 text-sm text-white bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded-md disabled:opacity-50"
+                >
+                  Download
+                </button>
+              </div>
+
+              {/* Segmented Image */}
+              <div className="flex flex-col justify-between items-center">
+                <div className="text-center">
+                  <h3 className="text-md font-medium mb-2 text-gray-700">
+                    Fault Segmented Image
+                  </h3>
+                  {images.segmented ? (
+                    <img
+                      src={images.segmented}
+                      alt="Segmented"
+                      className="rounded shadow-md max-h-48 object-contain"
+                    />
+                  ) : (
+                    <div className="h-48 w-full bg-gray-200 rounded flex items-center justify-center text-gray-400">
+                      Not Available
+                    </div>
+                  )}
+                </div>
+                <button
+                  onClick={() =>
+                    handleDownload(images.segmented, "segmented_image")
+                  }
+                  disabled={!images.segmented}
+                  className="mt-4 text-sm text-white bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded-md disabled:opacity-50"
+                >
+                  Download
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       <ToastContainer position="bottom-right" />

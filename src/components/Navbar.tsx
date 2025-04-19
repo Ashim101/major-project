@@ -25,7 +25,7 @@ const Navbar = () => {
           <Brain className="h-8 w-8" />
           <span className="text-xl font-bold">SeisRes</span>
         </div>
-        <ul className="flex space-x-8">
+        <ul className="flex space-x-8 items-center">
           <li>
             <button
               onClick={() => handleScrollLink("home")}

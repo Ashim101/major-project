@@ -35,13 +35,15 @@ const Team = () => {
           {teamMembers.map((member, index) => (
             <div
               key={index}
-              className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 max-w-96"
+              className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 max-w-64 min-h-[440px]"
             >
-              <img
-                src={member.image}
-                alt={member.name}
-                className="w-full h-64 object-cover"
-              />
+              <div className="min-h-[240px]">
+                <img
+                  src={member.image}
+                  alt={member.name}
+                  className="w-full h-60 object-cover "
+                />
+              </div>
               <div className="p-6">
                 <h3 className="text-xl font-semibold mb-2">{member.name}</h3>
                 <p className="text-blue-600 font-medium mb-3">{member.role}</p>
