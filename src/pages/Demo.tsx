@@ -84,15 +84,15 @@ const Demo = () => {
   return (
     <div className="min-h-screen pt-20 pb-12 bg-gray-50 font-sans">
       <div className="max-w-5xl mx-auto px-4">
-        <h1 className="text-3xl font-bold text-center mb-8 text-blue-900">
-          Seismic Image Denoising & Fault Segmentation
+        <h1 className="text-2xl font-bold text-center mb-8 text-blue-900">
+          Denoise and Identify the fault lines in your seismic data{" "}
         </h1>
 
         {/* Upload and Submit Section */}
         <div className="bg-white rounded-xl shadow-md p-6 mb-10">
           <div className="flex flex-col items-center gap-3">
             <label className="inline-block">
-              <div className="bg-blue-700 text-white text-sm px-4 py-2 rounded-md cursor-pointer hover:bg-blue-800 transition">
+              <div className="bg-blue-700 text-white text-sm px-4 py-2 rounded-md cursor-pointer hover:bg-blue-800 transition w-52 text-center">
                 {inputFile ? inputFile.name : "Choose File"}
               </div>
               <input
@@ -106,7 +106,7 @@ const Demo = () => {
             <button
               onClick={handleSubmit}
               disabled={loading}
-              className={`text-sm px-4 py-2 rounded-md font-semibold text-white transition ${
+              className={`text-sm px-4 py-2 rounded-md font-semibold text-white transition w-52 ${
                 loading
                   ? "bg-gray-400 cursor-not-allowed"
                   : "bg-emerald-600 hover:bg-emerald-700"
@@ -126,30 +126,29 @@ const Demo = () => {
 
         {/* Processed Image Section */}
         {!loading && (images.input || images.denoised || images.segmented) && (
-          <div className="bg-white rounded-xl shadow-md p-6">
-            <h2 className="text-xl font-semibold text-center mb-6 text-gray-800">
+          <div className="bg-white rounded-xl shadow-md p-6 space-y-6">
+            <h2 className="text-xl font-semibold text-center text-gray-800">
               Processed Results
             </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Individual Image Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {/* Input Image */}
-              <div className="flex flex-col justify-between items-center">
-                <div className="text-center">
-                  <h3 className="text-md font-medium mb-2 text-gray-700">
-                    Input Image
-                  </h3>
-                  {images.input ? (
-                    <img
-                      src={images.input}
-                      alt="Input"
-                      className="rounded shadow-md max-h-48 object-contain"
-                    />
-                  ) : (
-                    <div className="h-48 w-full bg-gray-200 rounded flex items-center justify-center text-gray-400">
-                      Not Available
-                    </div>
-                  )}
-                </div>
+              <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 flex flex-col items-center justify-between shadow-sm">
+                <h3 className="text-md font-medium mb-2 text-gray-700">
+                  Input Image
+                </h3>
+                {images.input ? (
+                  <img
+                    src={images.input}
+                    alt="Input"
+                    className="rounded shadow max-h-80 object-contain"
+                  />
+                ) : (
+                  <div className="h-48 w-full bg-gray-200 rounded flex items-center justify-center text-gray-400">
+                    Not Available
+                  </div>
+                )}
                 <button
                   onClick={() => handleDownload(images.input, "input_image")}
                   disabled={!images.input}
@@ -160,23 +159,21 @@ const Demo = () => {
               </div>
 
               {/* Denoised Image */}
-              <div className="flex flex-col justify-between items-center">
-                <div className="text-center">
-                  <h3 className="text-md font-medium mb-2 text-gray-700">
-                    Denoised Image
-                  </h3>
-                  {images.denoised ? (
-                    <img
-                      src={images.denoised}
-                      alt="Denoised"
-                      className="rounded shadow-md max-h-48 object-contain"
-                    />
-                  ) : (
-                    <div className="h-48 w-full bg-gray-200 rounded flex items-center justify-center text-gray-400">
-                      Not Available
-                    </div>
-                  )}
-                </div>
+              <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 flex flex-col items-center shadow-sm">
+                <h3 className="text-md font-medium mb-2 text-gray-700">
+                  Denoised Image
+                </h3>
+                {images.denoised ? (
+                  <img
+                    src={images.denoised}
+                    alt="Denoised"
+                    className="rounded shadow max-h-96 object-contain"
+                  />
+                ) : (
+                  <div className="h-48 w-full bg-gray-200 rounded flex items-center justify-center text-gray-400">
+                    Not Available
+                  </div>
+                )}
                 <button
                   onClick={() =>
                     handleDownload(images.denoised, "denoised_image")
@@ -188,24 +185,22 @@ const Demo = () => {
                 </button>
               </div>
 
-              {/* Segmented Image */}
-              <div className="flex flex-col justify-between items-center">
-                <div className="text-center">
-                  <h3 className="text-md font-medium mb-2 text-gray-700">
-                    Fault Segmented Image
-                  </h3>
-                  {images.segmented ? (
-                    <img
-                      src={images.segmented}
-                      alt="Segmented"
-                      className="rounded shadow-md max-h-48 object-contain"
-                    />
-                  ) : (
-                    <div className="h-48 w-full bg-gray-200 rounded flex items-center justify-center text-gray-400">
-                      Not Available
-                    </div>
-                  )}
-                </div>
+              {/* Fault Segmented Image */}
+              <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 flex flex-col items-center shadow-sm">
+                <h3 className="text-md font-medium mb-2 text-gray-700">
+                  Fault Segmented Image
+                </h3>
+                {images.segmented ? (
+                  <img
+                    src={images.segmented}
+                    alt="Segmented"
+                    className="rounded shadow max-h-96 object-contain"
+                  />
+                ) : (
+                  <div className="h-48 w-full bg-gray-200 rounded flex items-center justify-center text-gray-400">
+                    Not Available
+                  </div>
+                )}
                 <button
                   onClick={() =>
                     handleDownload(images.segmented, "segmented_image")

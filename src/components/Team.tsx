@@ -7,14 +7,14 @@ const teamMembers = [
     id: 1,
     name: "Amrit Sharma",
     role: "Backend Developer",
-    description: "Oversees the project and ensures all deliverables are met.",
+    description: "Develops and maintains the backend server for the project",
     image: amrit,
   },
   {
     id: 2,
     name: "Ashim Sapkota",
     role: "Frontend Developer",
-    description: "Develops themaintainable frontend for the project.",
+    description: "Develops the maintainable frontend for the project.",
     image: ashim,
   },
   {
