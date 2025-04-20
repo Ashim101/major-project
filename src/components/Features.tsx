@@ -1,32 +1,36 @@
-import { Zap, Search, BarChart3, Brain } from 'lucide-react';
+import { Zap, Search, BarChart3, Brain } from "lucide-react";
 
 const features = [
   {
     icon: <Zap className="w-12 h-12 text-purple-600" />,
-    title: 'Fast Processing',
-    description: 'Advanced algorithms optimized for rapid seismic data processing and analysis.',
+    title: "Fast Processing",
+    description:
+      "Advanced algorithms optimized for rapid seismic data processing and analysis.",
   },
   {
     icon: <Search className="w-12 h-12 text-purple-600" />,
-    title: 'Enhanced Resolution',
-    description: 'State-of-the-art superresolution techniques for clearer seismic imagery.',
+    title: "Enhanced Resolution",
+    description:
+      "State-of-the-art superresolution techniques for clearer seismic imagery.",
   },
   {
     icon: <BarChart3 className="w-12 h-12 text-purple-600" />,
-    title: 'Accurate Analysis',
-    description: 'Precise data interpretation for better geological understanding.',
+    title: "Accurate Analysis",
+    description:
+      "Precise data interpretation for better geological understanding.",
   },
   {
     icon: <Brain className="w-12 h-12 text-purple-600" />,
-    title: 'AI-Powered',
-    description: 'Machine learning algorithms for intelligent seismic processing.',
+    title: "AI-Powered",
+    description:
+      "Machine learning algorithms for intelligent seismic processing.",
   },
 ];
 
 const Features = () => {
   return (
-    <section id="features" className="py-20 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4">
+    <section id="features" className="py-20 bg-gray-200">
+      <div className="max-w-7xl mx-auto px-4 ">
         <h2 className="text-4xl font-bold text-center mb-12 text-gray-800">
           Our Features
         </h2>
@@ -34,7 +38,7 @@ const Features = () => {
           {features.map((feature, index) => (
             <div
               key={index}
-              className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300"
+              className="bg-white p-6 rounded-xl shadow-xl border-2 border-gray-300 "
             >
               <div className="flex justify-center mb-4">{feature.icon}</div>
               <h3 className="text-xl font-semibold text-center mb-3">

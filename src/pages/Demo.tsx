@@ -82,14 +82,14 @@ const Demo = () => {
   };
 
   return (
-    <div className="min-h-screen pt-20 pb-12 bg-gray-50 font-sans">
+    <div className="min-h-screen pt-20 pb-12 bg-gray-200 font-sans">
       <div className="max-w-5xl mx-auto px-4">
         <h1 className="text-2xl font-bold text-center mb-8 text-blue-900">
           Denoise and Identify the fault lines in your seismic data{" "}
         </h1>
 
         {/* Upload and Submit Section */}
-        <div className="bg-white rounded-xl shadow-md p-6 mb-10">
+        <div className="bg-white rounded-xl shadow-lg p-6 mb-10 border border-gray-300">
           <div className="flex flex-col items-center gap-3">
             <label className="inline-block">
               <div className="bg-blue-700 text-white text-sm px-4 py-2 rounded-md cursor-pointer hover:bg-blue-800 transition w-52 text-center">
@@ -126,7 +126,7 @@ const Demo = () => {
 
         {/* Processed Image Section */}
         {!loading && (images.input || images.denoised || images.segmented) && (
-          <div className="bg-white rounded-xl shadow-md p-6 space-y-6">
+          <div className="bg-white rounded-xl  p-6 space-y-6 border-2 border-gray-300 shadow-lg">
             <h2 className="text-xl font-semibold text-center text-gray-800">
               Processed Results
             </h2>
@@ -134,7 +134,7 @@ const Demo = () => {
             {/* Individual Image Cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {/* Input Image */}
-              <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 flex flex-col items-center justify-between shadow-md">
+              <div className="bg-gray-50 border-2 border-gray-300 rounded-lg p-4 flex flex-col items-center justify-between shadow-md ">
                 <h3 className="text-md font-medium mb-2 text-gray-700">
                   Input Image
                 </h3>
@@ -159,7 +159,7 @@ const Demo = () => {
               </div>
 
               {/* Denoised Image */}
-              <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 flex flex-col items-center shadow-sm">
+              <div className="bg-gray- border-2 border-gray-300 rounded-lg p-4 flex flex-col items-center shadow-lg">
                 <h3 className="text-md font-medium mb-2 text-gray-700">
                   Denoised Image
                 </h3>
@@ -170,7 +170,7 @@ const Demo = () => {
                     className="rounded shadow max-h-96 object-contain"
                   />
                 ) : (
-                  <div className="h-48 w-full bg-gray-200 rounded flex items-center justify-center text-gray-400">
+                  <div className="h-48 w-full bg-gray-300 rounded flex items-center justify-center text-gray-400">
                     Not Available
                   </div>
                 )}
@@ -186,7 +186,7 @@ const Demo = () => {
               </div>
 
               {/* Fault Segmented Image */}
-              <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 flex flex-col items-center shadow-sm">
+              <div className="bg-gray-50 border-2 border-gray-300 rounded-lg p-4 flex flex-col items-center shadow-lg">
                 <h3 className="text-md font-medium mb-2 text-gray-700">
                   Fault Segmented Image
                 </h3>

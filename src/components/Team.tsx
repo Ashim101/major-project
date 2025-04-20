@@ -28,14 +28,14 @@ const teamMembers = [
 
 const Team = () => {
   return (
-    <section id="team" className="py-20 bg-white">
+    <section id="team" className="py-20 bg-gray-200">
       <div className="max-w-7xl mx-auto px-4">
         <h2 className="text-4xl font-bold text-center mb-12">Our Team</h2>
         <div className="flex flex-col md:flex-row gap-4 items-center justify-center">
           {teamMembers.map((member, index) => (
             <div
               key={index}
-              className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 max-w-72 min-h-[440px]"
+              className="bg-white rounded-xl shadow-lg border-2 border-gray-200 overflow-hidden  max-w-72 min-h-[440px]"
             >
               <div className="min-h-[240px]">
                 <img
