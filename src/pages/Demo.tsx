@@ -39,7 +39,7 @@ const Demo = () => {
 
     try {
       const response = await fetch(
-        "https://qrhs13ph-8080.inc1.devtunnels.ms/denoise/",
+        "https://0m64jx4h-8000.inc1.devtunnels.ms/denoise/",
         {
           method: "POST",
           body: formData,
